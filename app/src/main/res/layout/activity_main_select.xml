@@ -17,15 +17,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/scroll_text"
-        android:layout_width="251dp"
-        android:layout_height="123dp"
-        android:text="aaaaaaaaaaaaaaabbb\nbbbbbbbbbbb\nbbbbbkkkkkkkkk\nkkkkkkkkkkkkkccccccc\ncccccccccccc\ncccdddddddd\nddddddddd\ndddddddddllllll"
-        app:layout_constraintBottom_toTopOf="@+id/text_test"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scrollbars="vertical"
-        android:singleLine="false"/>
 </android.support.constraint.ConstraintLayout>

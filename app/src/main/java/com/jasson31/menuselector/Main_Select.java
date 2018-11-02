@@ -17,11 +17,6 @@ public class Main_Select extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_select);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        TextView scroll = (TextView) findViewById(R.id.scroll_text);
-        scroll.setMovementMethod(ScrollingMovementMethod.getInstance());
-
     }
 
     @Override
