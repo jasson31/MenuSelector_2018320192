@@ -20,12 +20,11 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sub_Setting extends AppCompatActivity {
-    static final Restaurant[] testRestaurant = {new Restaurant("A", 2),
-            new Restaurant("B", 1),
-            new Restaurant("C", 3)};
+    static final ArrayList<Restaurant> testRestaurant = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +32,26 @@ public class Sub_Setting extends AppCompatActivity {
         setContentView(R.layout.activity_sub_setting);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ListView listView;
+        testRestaurant.add(new Restaurant("A", 2));
+        testRestaurant.add(new Restaurant("B", 3));
+        testRestaurant.add(new Restaurant("C", 1));
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+        for(int i = 0; i < testRestaurant.size(); i++){
+            adapter.add((i + 1) + ". " + testRestaurant.get(i).getName() + " " + testRestaurant.get(i).getPreference());
+        }
+        ListView listView = (ListView) findViewById(R.id.ListViewTest);
+        listView.setAdapter(adapter);
+        //final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, items);
+
+        /*ListView listView;
         ListViewAdapter adapter;
         adapter = new ListViewAdapter();
         listView = (ListView) findViewById(R.id.ListViewTest);
         listView.setAdapter(adapter);
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_account_box_black),
-                "Box", "Account Box Black");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_account_circle_black),
-                "Circle", "Account Circle Black");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_assignment_ind_black),
-                "Ind", "Assignment Ind Black");
+        adapter.addItem("Box", "Account Box Black");
+        adapter.addItem("Circle", "Account Circle Black");
+        adapter.addItem("Ind", "Assignment Ind Black");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -51,10 +59,10 @@ public class Sub_Setting extends AppCompatActivity {
                 TestItem item = (TestItem) parent.getItemAtPosition(position);
                 String titleStr = item.getTitle();
                 String descStr = item.getDesc();
-                Drawable iconDrawable = item.getIcon();
                 Toast.makeText(Sub_Setting.this, titleStr + "\n" + descStr, Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+
     }
 
     @Override

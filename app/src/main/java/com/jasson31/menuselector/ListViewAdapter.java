@@ -1,4 +1,4 @@
-package com.jasson31.menuselector;
+/*package com.jasson31.menuselector;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -28,11 +28,9 @@ public class ListViewAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.test_item, parent, false);
         }
-        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.imageView1);
         TextView titleTextView = (TextView) convertView.findViewById(R.id.textView1);
         TextView descTextView = (TextView) convertView.findViewById(R.id.textView2);
         TestItem testItem = listViewItemList.get(position);
-        iconImageView.setImageDrawable(testItem.getIcon());
         titleTextView.setText(testItem.getTitle());
         descTextView.setText(testItem.getDesc());
         return convertView;
@@ -45,11 +43,10 @@ public class ListViewAdapter extends BaseAdapter {
     public Object getItem(int position){
         return listViewItemList.get(position);
     }
-    public void addItem(Drawable icon, String title, String desc){
+    public void addItem(String title, String desc){
         TestItem item = new TestItem();
-        item.setIcon(icon);
         item.setTitle(title);
         item.setDesc(desc);
         listViewItemList.add(item);
     }
-}
+}*/
