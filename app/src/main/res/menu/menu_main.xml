@@ -2,12 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_next_page"
-        android:title="다음 페이지로"
+        android:id="@+id/action_config"
+        android:title="Config"
+        android:icon="@drawable/settings"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_setting"
-        android:title="설정"
-        app:showAsAction="ifRoom"
-        />
 </menu>
