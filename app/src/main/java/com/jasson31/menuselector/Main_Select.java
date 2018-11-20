@@ -17,16 +17,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Main_Select extends AppCompatActivity{
-    public static final ArrayList<Restaurant> testRestaurant = new ArrayList<>();
+    public static final ArrayList<Restaurant> restaurants = new ArrayList<>();
+    public static final ArrayList<String> restaurantStringData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_select);
 
-        testRestaurant.add(new Restaurant("A", 2));
-        testRestaurant.add(new Restaurant("B", 3));
-        testRestaurant.add(new Restaurant("C", 1));
         Button randomizer = (Button) findViewById(R.id.button_randomize);
         randomizer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,16 +53,16 @@ public class Main_Select extends AppCompatActivity{
                 return super.onOptionsItemSelected(item);
         }
     }
-
+    public static void AddRestaurant(Restaurant r){
+        restaurants.add(r);
+        int i = restaurants.size() - 1;
+        restaurantStringData.add((i + 1) + ". " + restaurants.get(i).getName() + " " + restaurants.get(i).getPreference());
+    }
     public void Randomizer(){
         TextView result = (TextView) findViewById(R.id.text_result);
-        int randomIndex = new Random().nextInt(3);
-        result.setText(testRestaurant.get(randomIndex).getName());
-        for(int i = 0; i < testRestaurant.size(); i++){
-            if(i != randomIndex)
-                continue;
-            testRestaurant.get(randomIndex).setPreference(testRestaurant.get(randomIndex).getPreference() + 1);
-        }
-        //Toast.makeText(this, testRestaurant.get(randomIndex).getPreference(), Toast.LENGTH_LONG).show();
+        if(restaurants.size() == 0)
+            return;
+        int randomIndex = new Random().nextInt(restaurants.size());
+        result.setText(restaurants.get(randomIndex).getName());
     }
 }
