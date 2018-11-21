@@ -18,7 +18,7 @@ import static com.jasson31.menuselector.Main_Select.FindIfExist;
 import static com.jasson31.menuselector.Main_Select.restaurantStringData;
 
 public class Sub_Setting extends AppCompatActivity {
-    protected ArrayAdapter adapter;
+    public static ArrayAdapter adapter;
     private InputDialog inputDialog;
 
     @Override
@@ -35,6 +35,12 @@ public class Sub_Setting extends AppCompatActivity {
                 Toast.makeText(Sub_Setting.this, (String)parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 
     @Override

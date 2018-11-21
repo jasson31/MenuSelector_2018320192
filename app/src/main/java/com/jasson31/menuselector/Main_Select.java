@@ -31,7 +31,7 @@ public class Main_Select extends AppCompatActivity{
         randomizer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Randomizer();
+                RandomizerBtnAction();
             }
         });
     }
@@ -56,8 +56,12 @@ public class Main_Select extends AppCompatActivity{
     }
     public static void AddRestaurant(Restaurant r){
         restaurants.add(r);
+        GetProbabilitySum();
         int i = restaurants.size() - 1;
-        restaurantStringData.add((i + 1) + ". " + restaurants.get(i).getName() + " " + restaurants.get(i).getPreference());
+        restaurantStringData.add(GetPrintableText(i));
+        for(i = 0; i < restaurants.size() - 1; i++){
+            restaurantStringData.set(i, GetPrintableText(i));
+        }
     }
     public static boolean FindIfExist(String name){
         for(int i = 0; i < restaurants.size(); i++){
@@ -66,9 +70,14 @@ public class Main_Select extends AppCompatActivity{
         }
         return false;
     }
-    public void Randomizer(){
-        if(restaurants.size() == 0){
-            Toast.makeText(this, "There is no restaurant", Toast.LENGTH_SHORT).show();
+    public static String GetPrintableText(int index){
+        return (index + 1) + ". " + restaurants.get(index).getName() + " : "
+                + Math.round((float)restaurants.get(index).getProbability() / GetProbabilitySum() * 10000) / 100.0
+                + " (" + restaurants.get(index).getPreference() + ")";
+    }
+    public void RandomizerBtnAction(){
+        if(restaurants.size() < 2){
+            Toast.makeText(this, "There should be more than 2 restaurants", Toast.LENGTH_SHORT).show();
             return;
         }
         else{
@@ -78,9 +87,7 @@ public class Main_Select extends AppCompatActivity{
             checkDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    int randomIndex = new Random().nextInt(restaurants.size());
-                    TextView result = (TextView) findViewById(R.id.text_result);
-                    result.setText(restaurants.get(randomIndex).getName());
+                    Randomizer();
                     dialog.dismiss();
                 }
             });
@@ -93,5 +100,34 @@ public class Main_Select extends AppCompatActivity{
             checkDialog.setCancelable(true);
             checkDialog.show();
         }
+    }
+    public void Randomizer(){
+        TextView result = (TextView) findViewById(R.id.text_result);
+        int random = new Random().nextInt(GetProbabilitySum());
+        int index = 0;
+        while(random > 0){
+            random -= restaurants.get(index).getProbability();
+            if(random <= 0){
+                result.setText(restaurants.get(index).getName());
+                restaurants.get(index).setProbability(0);
+                for(int i = 0; i < restaurants.size(); i++){
+                    if(i != index){
+                        restaurants.get(i).setProbability(restaurants.get(i).getProbability()
+                                + restaurants.get(i).getPreference());
+                    }
+                }
+            }
+            index++;
+        }
+        for(int i = 0; i < restaurants.size(); i++){
+            restaurantStringData.set(i, GetPrintableText(i));
+        }
+    }
+    public static int GetProbabilitySum(){
+        int probabilitySum = 0;
+        for(int i = 0; i < restaurants.size(); i++){
+            probabilitySum += restaurants.get(i).getProbability();
+        }
+        return probabilitySum;
     }
 }
