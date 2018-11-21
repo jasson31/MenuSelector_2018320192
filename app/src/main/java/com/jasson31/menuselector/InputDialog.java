@@ -49,7 +49,6 @@ public class InputDialog extends Dialog {
 
         }
     }
-
     public InputDialog(Context context, String title, String content,
                        View.OnClickListener leftListener, View.OnClickListener rightListener){
         super(context, android.R.style.Theme_Translucent);
@@ -62,7 +61,6 @@ public class InputDialog extends Dialog {
         name.setText("");
         preference.setText("");
     }
-
     public String GetName(){
         return name.getText().toString();
     }
