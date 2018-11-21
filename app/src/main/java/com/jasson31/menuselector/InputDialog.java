@@ -26,9 +26,7 @@ public class InputDialog extends Dialog {
         lpWindow.dimAmount = 0.8f;
         getWindow().setAttributes(lpWindow);
 
-
         setContentView(R.layout.dialog_take_restaurant);
-
 
         titleView = (TextView) findViewById(R.id.dialog_title);
         contentView = (TextView) findViewById(R.id.dialog_content);
@@ -60,11 +58,23 @@ public class InputDialog extends Dialog {
         this.yesBtnListener = leftListener;
         this.noBtnListener = rightListener;
     }
+    public void ClearInput(){
+        name.setText("");
+        preference.setText("");
+    }
 
     public String GetName(){
         return name.getText().toString();
     }
     public int GetPreference(){
-        return Integer.parseInt(preference.getText().toString());
+        int output;
+        try{
+            output = Integer.parseInt(preference.getText().toString());
+        }
+        catch(NumberFormatException e){
+            output = -1;
+        }
+        return output;
     }
+
 }
