@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -45,20 +46,13 @@ public class Main_Select extends AppCompatActivity{
             }
         });
 
-        Button test = (Button) findViewById(R.id.button);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SaveData();
-            }
-        });
-        Button test2 = (Button) findViewById(R.id.button2);
-        test2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoadData();
-            }
-        });
+        LoadData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        SaveData();
+        super.onDestroy();
     }
 
     @Override
@@ -94,7 +88,7 @@ public class Main_Select extends AppCompatActivity{
     public static String GetPrintableText(int index){
         return (index + 1) + ". " + restaurants.get(index).getName() + " : "
                 + Math.round((float)restaurants.get(index).getProbability() / GetProbabilitySum() * 10000) / 100.0
-                + " (" + restaurants.get(index).getPreference() + ")";
+                + "% (" + restaurants.get(index).getPreference() + ")";
     }
     public void RandomizerBtnAction(){
         if(restaurants.size() < 2){
@@ -129,6 +123,7 @@ public class Main_Select extends AppCompatActivity{
         while(random > 0){
             random -= restaurants.get(index).getProbability();
             if(random <= 0){
+                Toast.makeText(Main_Select.this, restaurants.get(index).getName(), Toast.LENGTH_SHORT).show();
                 result.setText(restaurants.get(index).getName());
                 restaurants.get(index).setProbability(0);
                 for(int i = 0; i < restaurants.size(); i++){
@@ -156,62 +151,33 @@ public class Main_Select extends AppCompatActivity{
     }
 
     public void SaveData(){
-        String string = "Hello world!";
-        File file = new File(getFilesDir(), "testFile");
-        FileWriter fw = null;
         try{
-            fw = new FileWriter(file);
-            fw.write(string);
-            Toast.makeText(this, "succeed", Toast.LENGTH_SHORT).show();
-        } catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-        }
-        if(fw != null){
-            try{
-                fw.close();
-            } catch(Exception e){
-                e.printStackTrace();
+            BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "test.txt", false));
+            int index = 0;
+            while(index < restaurants.size()){
+                bw.write(restaurants.get(index).getName() + "\n");
+                bw.write(restaurants.get(index).getPreference() + "\n");
+                bw.write(restaurants.get(index).getProbability() + "\n");
+                index++;
             }
+            bw.close();
+            Toast.makeText(Main_Select.this, "Succeed", Toast.LENGTH_SHORT).show();
+        } catch(Exception e){
+            e.printStackTrace();
+            Toast.makeText(Main_Select.this, "Error", Toast.LENGTH_SHORT).show();
         }
     }
     public void LoadData(){
-        /*File file = new File(getFilesDir(), "testFile");
-        FileReader fr = null;
-        int data;
-        char ch;
         try{
-            fr = new FileReader(file);
-            while((data = fr.read()) != -1){
-                ch = (char) data;
-                System.out.println("ch: " + ch);
+            BufferedReader br = new BufferedReader(new FileReader(getFilesDir() + "test.txt"));
+            String str = null;
+            while((str = br.readLine()) != null){
+                AddRestaurant(new Restaurant(str, Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine())));
             }
-            fr.close();
-        } catch (Exception e){
+            br.close();
+        } catch(Exception e){
             e.printStackTrace();
-            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-        }*/
-        StringBuffer buffer = new StringBuffer();
-        String data = null;
-        FileInputStream fis = null;
-        try {
-            fis = openFileInput("testFile");
-            BufferedReader iReader = new BufferedReader(new InputStreamReader((fis)));
-
-            data = iReader.readLine();
-            while(data != null)
-            {
-                buffer.append(data);
-                data = iReader.readLine();
-            }
-            buffer.append("\n");
-            iReader.close();
-            Toast.makeText(this, buffer, Toast.LENGTH_SHORT).show();
-        } catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Main_Select.this, "Error", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }

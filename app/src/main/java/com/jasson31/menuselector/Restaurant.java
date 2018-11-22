@@ -9,6 +9,11 @@ public class Restaurant {
         this.preference = preference;
         this.probability = preference;
     }
+    Restaurant(String name, int preference, int probability){
+        this.name = name;
+        this.preference = preference;
+        this.probability = probability;
+    }
     public String getName() {
         return name;
     }

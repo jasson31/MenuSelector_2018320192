@@ -10,7 +10,9 @@
         android:id="@+id/list_restaurants"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:divider="@color/whiteblue"
+        android:dividerHeight="4dp">
 
     </ListView>
 
