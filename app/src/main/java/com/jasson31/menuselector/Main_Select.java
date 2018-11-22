@@ -45,7 +45,6 @@ public class Main_Select extends AppCompatActivity{
                 RandomizerBtnAction();
             }
         });
-
         LoadData();
     }
 
@@ -103,7 +102,6 @@ public class Main_Select extends AppCompatActivity{
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Randomizer();
-                    dialog.dismiss();
                 }
             });
             checkDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -120,7 +118,7 @@ public class Main_Select extends AppCompatActivity{
         TextView result = (TextView) findViewById(R.id.text_result);
         int random = new Random().nextInt(GetProbabilitySum());
         int index = 0;
-        while(random > 0){
+        while(true){
             random -= restaurants.get(index).getProbability();
             if(random <= 0){
                 Toast.makeText(Main_Select.this, restaurants.get(index).getName(), Toast.LENGTH_SHORT).show();
@@ -132,10 +130,11 @@ public class Main_Select extends AppCompatActivity{
                                 + restaurants.get(i).getPreference());
                     }
                 }
+                UpdateStringData();
+                break;
             }
             index++;
         }
-        UpdateStringData();
     }
     public static void UpdateStringData(){
         for(int i = 0; i < restaurants.size(); i++){
@@ -161,15 +160,17 @@ public class Main_Select extends AppCompatActivity{
                 index++;
             }
             bw.close();
-            Toast.makeText(Main_Select.this, "Succeed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Main_Select.this, "Saved", Toast.LENGTH_SHORT).show();
         } catch(Exception e){
             e.printStackTrace();
-            Toast.makeText(Main_Select.this, "Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Main_Select.this, "Save error", Toast.LENGTH_SHORT).show();
         }
     }
     public void LoadData(){
         try{
             BufferedReader br = new BufferedReader(new FileReader(getFilesDir() + "test.txt"));
+            restaurants.clear();
+            restaurantStringData.clear();
             String str = null;
             while((str = br.readLine()) != null){
                 AddRestaurant(new Restaurant(str, Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine())));
@@ -177,7 +178,7 @@ public class Main_Select extends AppCompatActivity{
             br.close();
         } catch(Exception e){
             e.printStackTrace();
-            Toast.makeText(Main_Select.this, "Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Main_Select.this, "Load error", Toast.LENGTH_SHORT).show();
         }
     }
 }

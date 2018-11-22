@@ -165,6 +165,26 @@ public class Sub_Setting extends AppCompatActivity {
                 inputDialog.getWindow().setGravity(Gravity.CENTER);
                 inputDialog.show();
                 return true;
+            case R.id.action_reset:
+                AlertDialog.Builder checkDialog = new AlertDialog.Builder(Sub_Setting.this);
+                checkDialog.setTitle("Do you really want to erase all data?");
+                checkDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        restaurants.clear();
+                        restaurantStringData.clear();
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                checkDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                checkDialog.setCancelable(true);
+                checkDialog.show();
+                return true;
             case android.R.id.home:
                 finish();
                 return true;
