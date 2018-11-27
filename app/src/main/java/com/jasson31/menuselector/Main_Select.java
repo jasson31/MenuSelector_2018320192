@@ -121,7 +121,6 @@ public class Main_Select extends AppCompatActivity{
         while(true){
             random -= restaurants.get(index).getProbability();
             if(random <= 0){
-                Toast.makeText(Main_Select.this, restaurants.get(index).getName(), Toast.LENGTH_SHORT).show();
                 result.setText(restaurants.get(index).getName());
                 restaurants.get(index).setProbability(0);
                 for(int i = 0; i < restaurants.size(); i++){

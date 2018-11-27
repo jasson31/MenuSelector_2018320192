@@ -2,7 +2,7 @@
 <resources>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="white">#eeeeff</color>
+    <color name="white">#ffffff</color>
     <color name="whiteblue">#84a6fa</color>
     <color name="blue">#426cda</color>
     <color name="grayblue">#32488d</color>

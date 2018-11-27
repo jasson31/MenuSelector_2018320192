@@ -42,8 +42,7 @@ public class Sub_Setting extends AppCompatActivity {
                 clickDialog.setPositiveButton("Modify", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        inputDialog = new InputDialog(Sub_Setting.this, "Modify restaurant information",
-                                "Type a new information.",
+                        inputDialog = new InputDialog(Sub_Setting.this, "Type a new information.",
                                 new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -129,8 +128,7 @@ public class Sub_Setting extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.action_add:
-                inputDialog = new InputDialog(Sub_Setting.this, "New restaurant",
-                        "Type a new restaurant's information.",
+                inputDialog = new InputDialog(Sub_Setting.this, "Type a new restaurant's information.",
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
