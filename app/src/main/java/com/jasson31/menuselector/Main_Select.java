@@ -150,7 +150,7 @@ public class Main_Select extends AppCompatActivity{
 
     public void SaveData(){
         try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "test.txt", false));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "SavedData.txt", false));
             int index = 0;
             while(index < restaurants.size()){
                 bw.write(restaurants.get(index).getName() + "\n");
@@ -167,7 +167,7 @@ public class Main_Select extends AppCompatActivity{
     }
     public void LoadData(){
         try{
-            BufferedReader br = new BufferedReader(new FileReader(getFilesDir() + "test.txt"));
+            BufferedReader br = new BufferedReader(new FileReader(getFilesDir() + "SavedData.txt"));
             restaurants.clear();
             restaurantStringData.clear();
             String str = null;
