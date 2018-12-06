@@ -3,6 +3,9 @@ package com.jasson31.menuselector;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,12 +35,16 @@ import java.util.Random;
 public class Main_Select extends AppCompatActivity{
     public static final ArrayList<Restaurant> restaurants = new ArrayList<>();
     public static final ArrayList<String> restaurantStringData = new ArrayList<>();
+    private TextView result;
+    private int order = 0;
+    private int sleepTime = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_select);
 
+        result = (TextView) findViewById(R.id.text_result);
         Button randomizer = (Button) findViewById(R.id.button_randomize);
         randomizer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,32 +121,63 @@ public class Main_Select extends AppCompatActivity{
             checkDialog.show();
         }
     }
-    public void Randomizer(){
-        TextView result = (TextView) findViewById(R.id.text_result);
-        int random = new Random().nextInt(GetProbabilitySum());
-        int index = 0;
-        while(true){
-            random -= restaurants.get(index).getProbability();
-            if(random <= 0){
-                result.setText(restaurants.get(index).getName());
-                restaurants.get(index).setProbability(0);
-                for(int i = 0; i < restaurants.size(); i++){
-                    if(i != index){
-                        restaurants.get(i).setProbability(restaurants.get(i).getProbability()
-                                + restaurants.get(i).getPreference());
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            result.setText(restaurants.get(order % restaurants.size()).getName());
+            order++;
+            sleepTime += 5;
+            if(order == 16){
+                result.setTextColor(Color.BLACK);
+                int random = new Random().nextInt(GetProbabilitySum());
+                int index = 0;
+                while(true){
+                    random -= restaurants.get(index).getProbability();
+                    if(random <= 0){
+                        result.setText(restaurants.get(index).getName());
+                        restaurants.get(index).setProbability(0);
+                        for(int i = 0; i < restaurants.size(); i++){
+                            if(i != index){
+                                restaurants.get(i).setProbability(restaurants.get(i).getProbability()
+                                        + restaurants.get(i).getPreference());
+                            }
+                        }
+                        UpdateStringData();
+                        break;
                     }
+                    index++;
                 }
-                UpdateStringData();
-                break;
             }
-            index++;
         }
+    };
+
+    public void Randomizer(){
+        result.setTextColor(Color.GRAY);
+        sleepTime = 100;
+        Thread roulette = new Thread(){
+            public void run(){
+                order = new Random().nextInt(restaurants.size());
+                while(order < 15){
+                    try{
+                        sleep(sleepTime);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        break;
+                    }
+                    handler.sendEmptyMessage(0);
+                }
+            }
+        };
+        roulette.start();
     }
+
     public static void UpdateStringData(){
         for(int i = 0; i < restaurants.size(); i++){
             restaurantStringData.set(i, GetPrintableText(i));
         }
     }
+
     public static int GetProbabilitySum(){
         int probabilitySum = 0;
         for(int i = 0; i < restaurants.size(); i++){
@@ -165,6 +203,7 @@ public class Main_Select extends AppCompatActivity{
             Toast.makeText(Main_Select.this, "Save error", Toast.LENGTH_SHORT).show();
         }
     }
+
     public void LoadData(){
         try{
             BufferedReader br = new BufferedReader(new FileReader(getFilesDir() + "SavedData.txt"));
