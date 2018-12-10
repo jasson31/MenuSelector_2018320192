@@ -14,21 +14,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -186,11 +180,11 @@ public class Main_Select extends AppCompatActivity{
         return probabilitySum;
     }
 
-    public void SaveData(){
-        try{
+    public void SaveData() {
+        try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "SavedData.txt", false));
             int index = 0;
-            while(index < restaurants.size()){
+            while (index < restaurants.size()) {
                 bw.write(restaurants.get(index).getName() + "\n");
                 bw.write(restaurants.get(index).getPreference() + "\n");
                 bw.write(restaurants.get(index).getProbability() + "\n");
@@ -198,7 +192,7 @@ public class Main_Select extends AppCompatActivity{
             }
             bw.close();
             Toast.makeText(Main_Select.this, "Saved", Toast.LENGTH_SHORT).show();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(Main_Select.this, "Save error", Toast.LENGTH_SHORT).show();
         }
