@@ -131,12 +131,10 @@ public class Main_Select extends AppCompatActivity{
                     if(random <= 0){
                         result.setText(restaurants.get(index).getName());
                         restaurants.get(index).setProbability(0);
-                        for(int i = 0; i < restaurants.size(); i++){
-                            if(i != index){
+                        for(int i = 0; i < restaurants.size(); i++)
+                            if(i != index)
                                 restaurants.get(i).setProbability(restaurants.get(i).getProbability()
                                         + restaurants.get(i).getPreference());
-                            }
-                        }
                         UpdateStringData();
                         break;
                     }
@@ -167,16 +165,14 @@ public class Main_Select extends AppCompatActivity{
     }
 
     public static void UpdateStringData(){
-        for(int i = 0; i < restaurants.size(); i++){
+        for(int i = 0; i < restaurants.size(); i++)
             restaurantStringData.set(i, GetPrintableText(i));
-        }
     }
 
     public static int GetProbabilitySum(){
         int probabilitySum = 0;
-        for(int i = 0; i < restaurants.size(); i++){
+        for(int i = 0; i < restaurants.size(); i++)
             probabilitySum += restaurants.get(i).getProbability();
-        }
         return probabilitySum;
     }
 

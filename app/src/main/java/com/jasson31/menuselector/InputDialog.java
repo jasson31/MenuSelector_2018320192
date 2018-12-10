@@ -23,7 +23,6 @@ public class InputDialog extends Dialog {
         lpWindow.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         lpWindow.dimAmount = 0.8f;
         getWindow().setAttributes(lpWindow);
-
         setContentView(R.layout.dialog_take_restaurant);
 
         contentView = (TextView) findViewById(R.id.dialog_content);
@@ -33,7 +32,6 @@ public class InputDialog extends Dialog {
         noBtn = (Button) findViewById(R.id.dialog_btn_No);
 
         contentView.setText(content);
-
         if(yesBtnListener != null && noBtnListener != null){
             yesBtn.setOnClickListener(yesBtnListener);
             noBtn.setOnClickListener(noBtnListener);
@@ -41,12 +39,8 @@ public class InputDialog extends Dialog {
         else if(yesBtnListener != null && noBtnListener == null){
             yesBtn.setOnClickListener(yesBtnListener);
         }
-        else{
-
-        }
     }
-    public InputDialog(Context context, String content,
-                       View.OnClickListener leftListener, View.OnClickListener rightListener){
+    public InputDialog(Context context, String content, View.OnClickListener leftListener, View.OnClickListener rightListener){
         super(context, android.R.style.Theme_Translucent);
         this.content = content;
         this.yesBtnListener = leftListener;
@@ -69,5 +63,4 @@ public class InputDialog extends Dialog {
         }
         return output;
     }
-
 }
